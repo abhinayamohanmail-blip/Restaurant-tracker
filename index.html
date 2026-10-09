@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Restaurant Income & Expense Tracker</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <h1>🍽️ Restaurant Income &amp; Expense Tracker</h1>
+    <p>Manage your daily income, expenses and profit</p>
+  </header>
+
+  <!-- NAVIGATION -->
+  <nav>
+    <button class="nav-btn active" data-section="dashboard">Dashboard</button>
+    <button class="nav-btn" data-section="income">Add Income</button>
+    <button class="nav-btn" data-section="expense">Add Expense</button>
+    <button class="nav-btn" data-section="transactions">Transactions</button>
+    <button class="nav-btn" data-section="reports">Reports</button>
+  </nav>
+
+  <main>
+
+    <!-- 1. DASHBOARD -->
+    <section id="dashboard" class="section active">
+      <h2>Today's Summary</h2>
+      <div class="cards">
+        <div class="card income-card">
+          <p class="card-title">Today's Income</p>
+          <p class="card-value" id="todayIncome">₹0.00</p>
+        </div>
+        <div class="card expense-card">
+          <p class="card-title">Today's Expenses</p>
+          <p class="card-value" id="todayExpense">₹0.00</p>
+        </div>
+        <div class="card profit-card">
+          <p class="card-title">Today's Profit</p>
+          <p class="card-value" id="todayProfit">₹0.00</p>
+        </div>
+        <div class="card count-card">
+          <p class="card-title">Total Transactions</p>
+          <p class="card-value" id="totalCount">0</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. ADD INCOME -->
+    <section id="income" class="section">
+      <h2>Add Income</h2>
+      <form id="incomeForm" class="form-box" novalidate>
+        <label for="incomeDate">Date</label>
+        <input type="date" id="incomeDate">
+
+        <label for="incomeDesc">Description</label>
+        <input type="text" id="incomeDesc" placeholder="e.g. Lunch sales">
+
+        <label for="incomeCategory">Category</label>
+        <select id="incomeCategory"></select>
+
+        <label for="incomeAmount">Amount (₹)</label>
+        <input type="number" id="incomeAmount" placeholder="0.00" step="0.01" min="0">
+
+        <label for="incomePayment">Payment Method</label>
+        <select id="incomePayment">
+          <option value="">-- Select --</option>
+          <option value="Cash">Cash</option>
+          <option value="UPI">UPI</option>
+          <option value="Card">Card</option>
+        </select>
+
+        <p class="error" id="incomeError"></p>
+        <button type="submit" class="btn btn-green">Add Income</button>
+      </form>
+    </section>
+
+    <!-- 3. ADD EXPENSE -->
+    <section id="expense" class="section">
+      <h2>Add Expense</h2>
+      <form id="expenseForm" class="form-box" novalidate>
+        <label for="expenseDate">Date</label>
+        <input type="date" id="expenseDate">
+
+        <label for="expenseDesc">Description</label>
+        <input type="text" id="expenseDesc" placeholder="e.g. Bought tomatoes">
+
+        <label for="expenseCategory">Category</label>
+        <select id="expenseCategory"></select>
+
+        <label for="expenseAmount">Amount (₹)</label>
+        <input type="number" id="expenseAmount" placeholder="0.00" step="0.01" min="0">
+
+        <label for="expensePayment">Payment Method</label>
+        <select id="expensePayment">
+          <option value="">-- Select --</option>
+          <option value="Cash">Cash</option>
+          <option value="UPI">UPI</option>
+          <option value="Card">Card</option>
+        </select>
+
+        <p class="error" id="expenseError"></p>
+        <button type="submit" class="btn btn-red">Add Expense</button>
+      </form>
+    </section>
+
+    <!-- 4. TRANSACTIONS -->
+    <section id="transactions" class="section">
+      <h2>All Transactions</h2>
+
+      <div class="filters">
+        <select id="filterType">
+          <option value="">All Types</option>
+          <option value="Income">Income</option>
+          <option value="Expense">Expense</option>
+        </select>
+
+        <select id="filterCategory">
+          <option value="">All Categories</option>
+        </select>
+
+        <input type="date" id="filterDate">
+
+        <button class="btn btn-gray" id="clearFilters">Clear Filters</button>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Type</th>
+              <th>Description</th>
+              <th>Category</th>
+              <th>Amount</th>
+              <th>Payment</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="transactionBody"></tbody>
+        </table>
+      </div>
+      <p class="empty" id="emptyMessage">No transactions found.</p>
+    </section>
+
+    <!-- 5. REPORTS -->
+    <section id="reports" class="section">
+      <h2>Reports</h2>
+
+      <div class="report-buttons">
+        <button class="btn report-btn active" data-period="today">Today</button>
+        <button class="btn report-btn" data-period="week">This Week</button>
+        <button class="btn report-btn" data-period="month">This Month</button>
+      </div>
+
+      <p class="report-note" id="reportNote"></p>
+
+      <div class="cards">
+        <div class="card income-card">
+          <p class="card-title">Total Income</p>
+          <p class="card-value" id="reportIncome">₹0.00</p>
+        </div>
+        <div class="card expense-card">
+          <p class="card-title">Total Expenses</p>
+          <p class="card-value" id="reportExpense">₹0.00</p>
+        </div>
+        <div class="card profit-card">
+          <p class="card-title">Total Profit</p>
+          <p class="card-value" id="reportProfit">₹0.00</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <p>Restaurant Income &amp; Expense Tracker</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+  </html>
